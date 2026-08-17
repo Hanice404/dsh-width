@@ -1,0 +1,8 @@
+# dsh-width bundle for DeepSeek Harness (dsh).
+# Inserted into the profile's composition when this bundle is installed
+# (`dsh plugin --profile web add link:<path>`). The node half registers the
+# durable settings namespace; the client half renders the "显示" settings
+# page and applies the width CSS.
+- insert:
+    - id: dsh-width
+      name: dsh-width
