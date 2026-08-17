@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 ## 功能
-
+![](https://i.mij.rip/2026/08/18/faefb01284245759bd4144ff9de3b1dc.png)
 | 滑杆 | 效果 |
 | --- | --- |
 | **内容展示区宽度** | 调整消息内容列的宽度（占中间栏的百分比，`--dsh-chat-content-width`） |
