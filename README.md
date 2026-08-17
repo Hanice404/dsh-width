@@ -22,7 +22,7 @@
 
 ```bash
 # 从 GitHub 安装（发布后）
-dsh plugin --profile web add https://github.com/<你的用户名>/dsh-width/archive/refs/heads/main.tar.gz
+dsh plugin --profile web add https://github.com/Hanice404/dsh-width/archive/refs/heads/main.tar.gz
 
 # 或从本地目录（开发调试）
 dsh plugin --profile web add link:/path/to/dsh-width
