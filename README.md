@@ -36,17 +36,17 @@ dsh plugin --profile web add link:/path/to/dsh-width
 
 安装后**重启 `dsh web`**（Ctrl+C 后重新运行 `dsh web`），使浏览器端加载新插件 bundle。
 
-## 暴露设置命名空间（必需，一次性）
+## 暴露设置命名空间（仅旧版 DSH 需要）
 
-> ⚠️ 这是本版本 DSH 的已知限制：浏览器可读写的设置命名空间被硬编码在 `dsh-host-apiproxy` 的 `WEB_SETTINGS_NAMESPACES` 白名单里。**不执行本步骤时，设置页的滑杆会显示为禁用、写入失败**（错误码 `settings-not-exposed`）。
+> DSH **0.1.0-rc.7 及以后**已移除 `WEB_SETTINGS_NAMESPACES` 白名单，插件通过 `settings.register()` 注册的命名空间会**自动暴露给浏览器**，无需任何额外步骤，重启即可使用。
 
-执行插件自带的幂等补丁脚本（profile 重装或 dsh 升级后可重跑）：
+仅在 **0.1.0-rc.6 及更早**版本上，浏览器可读写的设置命名空间被硬编码在 `dsh-host-apiproxy` 的 `WEB_SETTINGS_NAMESPACES` 白名单里，需要执行一次幂等补丁：
 
 ```bash
 npm run expose   # 等价于 node scripts/patch-apiproxy.mjs
 ```
 
-然后**再次重启 `dsh web`**。之后滑杆即可正常读写，值持久化在 `~/.dsh/settings.yaml`。
+> 该脚本在新版 DSH 上会检测到「无白名单」并直接成功退出（无害）。执行后**再次重启 `dsh web`**。
 
 ## 使用
 
@@ -69,13 +69,13 @@ npm run expose   # 等价于 node scripts/patch-apiproxy.mjs
 
 | 现象 | 原因与解决 |
 | --- | --- |
-| 设置页滑杆是**禁用**状态 | 命名空间未暴露：运行 `npm run expose` 并重启 `dsh web` |
+| 设置页滑杆是**禁用**状态 | 旧版 DSH（≤rc.6）命名空间未暴露：运行 `npm run expose` 并重启 `dsh web` |
 | 设置值存到哪里 | `~/.dsh/settings.yaml` 的 `dsh-width` 一节 |
 | 滑杆范围 / 默认值如何改 | 同时改 `lib/index.js` 的 schema 与 `lib/client.js` 的 `MIN/MAX/STEP/DEFAULT` |
 
 ## 兼容性
 
-- 目标平台：DeepSeek Harness **web**（`dsh --profile web`），版本 `0.1.0-rc.6` 系列；
+- 目标平台：DeepSeek Harness **web**（`dsh --profile web`），版本 `0.1.0-rc.6` 及以后（rc.7+ 无需 expose 步骤）；
 - 依赖：见 `package.json` peerDependencies。
 
 ## 目录结构
@@ -89,7 +89,7 @@ dsh-width/
 │   ├── index.js          # 节点端：注册 dsh-width 设置命名空间
 │   └── client.js         # 浏览器端：设置页 + 宽度 CSS 注入
 └── scripts/
-    └── patch-apiproxy.mjs # 暴露设置命名空间到浏览器（一次性补丁）
+    └── patch-apiproxy.mjs # 暴露命名空间到浏览器（仅旧版 DSH ≤rc.6 需要）
 ```
 
 ## License

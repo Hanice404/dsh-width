@@ -88,12 +88,23 @@ for (const candidate of candidates()) {
 }
 
 let patched = 0
+let sawAllowlist = false
 for (const r of results) {
+  // `WEB_SETTINGS_NAMESPACES not found` means this DSH build no longer gates
+  // browser settings behind the hardcoded allowlist (0.1.0-rc.7+): namespaces
+  // registered through settings.register() are exposed automatically.
+  if (r.reason !== 'missing' && r.reason !== 'WEB_SETTINGS_NAMESPACES not found') sawAllowlist = true
   console.log(`${r.patched ? 'PATCHED' : 'SKIPPED'} ${r.reason}: ${r.path}`)
   if (r.patched) patched += 1
 }
 
-if (patched === 0) {
+if (!sawAllowlist) {
+  console.log('\nNo WEB_SETTINGS_NAMESPACES allowlist found — this DSH version exposes registered')
+  console.log(`settings namespaces to the browser automatically, so "${NS}" needs no patch.`)
+  process.exit(0)
+}
+
+if (patched === 0 && !results.some((r) => r.reason === 'already exposed')) {
   console.log('Nothing to patch. If your deployment keeps dsh-host-apiproxy elsewhere, add this line to')
   console.log('its WEB_SETTINGS_NAMESPACES list (in lib/index.js):')
   console.log(`  "${NS}",`)
