@@ -15,6 +15,7 @@
   },
   "files": [
     "lib",
+    "dsh.plugin.json",
     "cordis.patch.yml",
     "scripts/patch-apiproxy.mjs",
     "README.md",
