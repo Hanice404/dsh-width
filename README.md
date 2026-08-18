@@ -63,8 +63,8 @@ npm run expose   # 等价于 node scripts/patch-apiproxy.mjs
 - **浏览器端**（`lib/client.js`）：
   - 通过 `ctx.settingsScope.bind` 订阅设置，变化时实时套用宽度；
   - 在 `settings.section` 槽位注册独立设置页「显示」（与「模型 / 插件 / Agent 预设 / 文件提及」并列）；
-  - 用稳定的 `[data-conversation-scroll]` 属性选择器（不依赖哈希类名）覆盖 `--dsh-chat-content-width`（消息列）与 `--dsh-composer-card-max-width`（composer 栈，即输入框容器），并**直接覆盖** `[data-chat-flow]`（消息列）的 `max-width`，同时让 `[data-composer-card]`（输入框卡片）保持栈宽的 100%——避免「栈 + 卡片」两级百分比嵌套导致输入框几乎不变的问题；
-  - 新会话（hero）页面里，工作区 / 模式选择菜单行通过 `:has()` 选中并补上与输入框相同的 `--dsh-composer-side-clearance` 水平边距，与对话框（输入框）宽度对齐。
+  - 用稳定的 `[data-conversation-scroll]` 属性选择器（不依赖哈希类名）覆盖 `--dsh-chat-content-width`（消息列）；**有会话的界面**保持 composer 栈全宽、只覆盖 `[data-composer-card]`（输入框）的 `max-width` 为 `input%`，输入框居中且宽度随设置变化；
+  - **新会话（hero）页面**把 composer 栈本身收窄为 `input%`（`align-self:center` 保持居中），工作区 / 模式选择菜单行通过 `:has()` 选中并补上与输入框相同的 `--dsh-composer-side-clearance` 水平边距，与对话框（输入框）宽度对齐。
 
 ## 常见问题
 
