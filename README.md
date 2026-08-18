@@ -63,8 +63,8 @@ npm run expose   # 等价于 node scripts/patch-apiproxy.mjs
 - **浏览器端**（`lib/client.js`）：
   - 通过 `ctx.settingsScope.bind` 订阅设置，变化时实时套用宽度；
   - 在 `settings.section` 槽位注册独立设置页「显示」（与「模型 / 插件 / Agent 预设 / 文件提及」并列）；
-  - 用稳定的 `[data-conversation-scroll]` 属性选择器（不依赖哈希类名）覆盖 `--dsh-chat-content-width`（消息列）；**有会话的界面**保持 composer 栈全宽、只覆盖 `[data-composer-card]`（输入框）的 `max-width` 为 `input%`，输入框居中且宽度随设置变化；
-  - **新会话（hero）页面**把 composer 栈本身收窄为 `input%`（`align-self:center` 保持居中），工作区 / 模式选择菜单行通过 `:has()` 选中并补上与输入框相同的 `--dsh-composer-side-clearance` 水平边距，与对话框（输入框）宽度对齐。
+  - 用稳定的 `[data-conversation-scroll]` 属性选择器（不依赖哈希类名）覆盖 `--dsh-chat-content-width`（消息列），并直接覆盖 `[data-composer-card]`（输入框）的 `max-width` 为 `input%`——**不改变 composer 栈宽度**，因此 welcome 区、有会话的界面等其他布局完全不受影响；
+  - **新会话（hero）页面**：工作区 / 模式选择菜单行的左边缘通过 JS（`MutationObserver` + `rAF`）精确对齐到输入框左边缘——只移动这一行，不改变任何其他元素的布局。
 
 ## 常见问题
 
