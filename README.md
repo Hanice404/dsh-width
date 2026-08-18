@@ -63,7 +63,7 @@ npm run expose   # 等价于 node scripts/patch-apiproxy.mjs
 - **浏览器端**（`lib/client.js`）：
   - 通过 `ctx.settingsScope.bind` 订阅设置，变化时实时套用宽度；
   - 在 `settings.section` 槽位注册独立设置页「显示」（与「模型 / 插件 / Agent 预设 / 文件提及」并列）；
-  - 宽度用稳定的 `[data-conversation-scroll]` 属性选择器（不依赖哈希类名）覆盖两个 CSS 变量：`--dsh-chat-content-width` 与 `--dsh-composer-card-max-width`。
+  - 用稳定的 `[data-conversation-scroll]` 属性选择器（不依赖哈希类名）覆盖 `--dsh-chat-content-width`（消息列）并把 composer 栈设为全宽，再**直接覆盖** `[data-chat-flow]`（消息列）与 `[data-composer-card]`（输入框）的 `max-width`（均为 `!important`），避免「栈 + 卡片」两级百分比嵌套导致输入框几乎不变的问题。
 
 ## 常见问题
 
