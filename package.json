@@ -1,6 +1,6 @@
 {
   "name": "dsh-width",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "description": "DSH web 插件：在「设置」中增加「显示」页，用两个滑杆分别调节输入框与内容展示区的宽度百分比，改动即时生效并持久化。 / DSH web plugin: adds a \"Display\" page under Settings with two sliders that adjust the width percentage of the input box and the content area, applied live and persisted.",
   "type": "module",
   "main": "lib/index.js",
@@ -11,6 +11,7 @@
     "./client": {
       "default": "./lib/client.js"
     },
+    "./cordis.patch.yml": "./cordis.patch.yml",
     "./package.json": "./package.json"
   },
   "files": [
@@ -38,15 +39,14 @@
   ],
   "peerDependencies": {
     "@deepseek-ai/cordis": "^4.0.1",
-    "@deepseek-ai/dsh-api-remotes": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-client-connection": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-client-locale": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-client-runtime": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-client-ui-settings": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-client-ui-slots": "^0.1.0-rc.6",
     "@deepseek-ai/dsh-settings": "^0.1.0-rc.6",
     "@deepseek-ai/schemastery": "^3.18.1",
     "react": "^18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-settings": {
+      "optional": true
+    }
   },
   "dsh": {
     "bundle": {
@@ -54,12 +54,10 @@
     },
     "client": {
       "inject": [
-        "@deepseek-ai/dsh-client-connection",
         "@deepseek-ai/dsh-client-runtime",
         "@deepseek-ai/dsh-client-locale",
         "@deepseek-ai/dsh-client-ui-settings",
-        "@deepseek-ai/dsh-client-ui-slots",
-        "@deepseek-ai/dsh-api-remotes"
+        "@deepseek-ai/dsh-client-ui-slots"
       ],
       "platform": "web"
     }

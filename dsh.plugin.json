@@ -1,6 +1,6 @@
 {
   "id": "dsh-width",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "main": "./lib/index.js",
   "description": "在设置中增加「显示」页，调节输入框与内容展示区的宽度百分比。Adds a Display settings page to adjust the input-box and content-area width percentage.",
   "engines": {
